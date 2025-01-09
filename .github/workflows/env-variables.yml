@@ -2,14 +2,22 @@ name: Environment Variables
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
-  env:
-    CHANNEL_NAME: AmazonProductFinder
-  jobs:
-    job1:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Access repositoy secret
-          run: echo ${{ secrets.SCRAPEOPS_API_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment variable from secret
+        run: |
+          echo "SCRAPEOPS_API_KEY=${{ secrets.SCRAPEOPS_API_KEY }}" >> $GITHUB_ENV
+
+      - name: Print secret (for debugging, REMOVE in production)
+        run: echo $SCRAPEOPS_API_KEY
+
+      # Other steps to use the secret...
