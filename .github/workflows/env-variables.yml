@@ -1,0 +1,15 @@
+name: Environment Variables
+
+on:
+  push:
+    branches: [ main ]
+
+  env:
+    CHANNEL_NAME: AmazonProductFinder
+  jobs:
+    job1:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Access repositoy secret
+          run: echo ${{ secrets.SCRAPEOPS_API_KEY }}
